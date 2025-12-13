@@ -25,6 +25,12 @@
     <section class="mt-8 w-full max-w-4xl container mx-auto">
         <div v-if="event" class="space-y-10">
             <Heading>Cartelera</Heading>
+            <div class="flex justify-center">
+                <div class="inline-flex border border-black text-center p-1">
+                    <span class="bg-black text-white px-4 py-2 border-r border-black">WTB</span>
+                    <span class="bg-white px-4 py-2 italic font-bold text-red-700">{{ event.name.split(' ')[1]?.split(':')[0] }}</span>
+                </div>
+            </div>
 
             <p class="text-center text-gray-500 italic">{{ formatDate(event.date) }} - {{ event.location?? 'Ubicación a confirmar' }}</p>
 
@@ -32,6 +38,7 @@
                 v-for="fight in event.fights"  
                 :key="fight.id"
                 :fight="fight"
+                :fights="event.fights"
             />
         </div>
     </section>
