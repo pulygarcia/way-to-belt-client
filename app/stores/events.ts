@@ -3,6 +3,8 @@ import { ref, computed } from 'vue'
 import type { Event } from '~/utils/interfaces/event'
 
 export const useEventsStore = defineStore('events', () => {
+  const config = useRuntimeConfig()
+
   const events = ref<Event[]>([])
   const filter = ref<'upcoming' | 'past'>('upcoming')
   const loading = ref(false)
@@ -12,7 +14,7 @@ export const useEventsStore = defineStore('events', () => {
     loading.value = true
     error.value = null
     try {
-      const res = await fetch('http://localhost:3001/events')
+      const res = await fetch(`${config.public.apiBase}/events`)
       if (!res.ok) throw new Error('Error al cargar los eventos')
         
       events.value = await res.json()

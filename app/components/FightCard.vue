@@ -51,7 +51,7 @@
                             </div>
                         </div>
                         <div
-                            v-if="fight.result == fight.fighterA.firstName + ' ' + fight.fighterA.lastName"
+                            v-if="fight.winner?.id === +fight.fighterA.id"
                         >
                             <p class="flex items-center text-sm font-bold uppercase text-green-700 mt-2">
                                 GANADOR
@@ -59,7 +59,7 @@
                             </p>
                         </div>
                     </div>
-                    <div v-if="fight.result">
+                    <div v-if="fight.status === 'FINALIZADA'">
                         <p class="text-xs font-bold uppercase text-green-700">
                             FINALIZADO
                         </p>
@@ -87,7 +87,7 @@
                             </div>
                         </div>
                         <div
-                            v-if="fight.result == fight.fighterB.firstName + ' ' + fight.fighterB.lastName"
+                            v-if="fight.winner?.id === fight.fighterB.id"
                         >
                             <p class="flex items-center text-sm font-bold uppercase text-green-700 mt-2">
                                 GANADOR
