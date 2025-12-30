@@ -17,7 +17,7 @@
             class="absolute inset-0 bg-cover bg-center transition-opacity duration-1000" 
         ></div>
 
-        <div class="absolute inset-0 bg-gradient-to-t from-red-800/80 via-black/70 to-black/80 "></div>
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-500 via-gray-700 to-black "></div>
 
         <div class="relative z-10 max-w-4xl mx-auto py-12">
             
