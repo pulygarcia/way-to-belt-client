@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import type { Event } from '~/utils/interfaces/event'
+import type { FightEvent } from '~/utils/interfaces/event'
 
 export const useEventsStore = defineStore('events', () => {
   const config = useRuntimeConfig()
 
-  const events = ref<Event[]>([])
+  const events = ref<FightEvent[]>([])
   const filter = ref<'upcoming' | 'past'>('upcoming')
   const loading = ref(false)
   const error = ref(null)
@@ -17,7 +17,10 @@ export const useEventsStore = defineStore('events', () => {
       const res = await fetch(`${config.public.apiBase}/events`)
       if (!res.ok) throw new Error('Error al cargar los eventos')
         
-      events.value = await res.json()
+      const data = await res.json()
+      events.value = data
+
+      return data
 
     } catch (err:any) {
       error.value = err

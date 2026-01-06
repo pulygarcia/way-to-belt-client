@@ -1,3 +1,4 @@
+import type { FightEvent } from "./event";
 import type { Fighter } from "./fighter"
 
 export enum FightStatus {
@@ -24,7 +25,7 @@ export interface Fight {
   fighterA: Fighter;
   fighterB: Fighter;
   status: FightStatus;
-  event: Event;
+  event: FightEvent;
   //optional fields for finalized fights
   winner?: Fighter | null;
   method?: string | null;

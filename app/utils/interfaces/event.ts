@@ -1,9 +1,9 @@
 import type { Fight } from "./fight"
 
-export interface Event {
+export interface FightEvent {
   id: number
   name: string
-  date: string
+  date: Date
   location?: string
   fights: Fight[]
 }

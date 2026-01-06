@@ -10,7 +10,6 @@
 
           <nav class="space-x-4">
             <NuxtLink to="/fighters" class="text-gray-700 hover:text-red-400">Peleadores</NuxtLink>
-            <NuxtLink to="/ranking" class="text-gray-700 hover:text-red-400">Ranking</NuxtLink>
             <NuxtLink to="/events" class="text-gray-700 hover:text-red-400">Eventos</NuxtLink>
           </nav>
         </header>

@@ -1,3 +1,5 @@
+import type { Fight } from "./fight";
+
 export interface Fighter {
   id: number;
   firstName: string;
@@ -11,4 +13,7 @@ export interface Fighter {
   wins: number;
   losses: number;
   draws: number;
+  rankingPosition: number;
+  fightsAsA: [Fight]
+  fightsAsB: [Fight]
 }

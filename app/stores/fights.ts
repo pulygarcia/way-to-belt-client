@@ -17,8 +17,11 @@ export const useFightsStore = defineStore('fights', () => {
       const res = await fetch(`${config.public.apiBase}/fights`)
       if (!res.ok) throw new Error('Error al cargar los combates')
 
-      fights.value = await res.json()
+      const data =  await res.json()
+      fights.value = data
 
+      return data;
+      
     } catch (err:any) {
       error.value = err
 
