@@ -14,7 +14,7 @@
   <div class="relative w-full h-screen bg-[#050505] overflow-hidden flex items-center">
     
     <div class="absolute -left-20 top-1/2 -translate-y-1/2 select-none pointer-events-none">
-      <h2 class="text-[25vw] font-black text-white/[0.04] uppercase italic tracking-tighter">
+      <h2 class="text-[25vw] font-black text-white/[0.04] uppercase italic tracking-tighter animate-fade-up animate-duration-500">
         {{ props.event.name.split(' ')[0] }}
       </h2>
     </div>
@@ -22,7 +22,7 @@
     <div class="relative z-10 w-full max-w-[1400px] mx-auto px-6 grid grid-cols-12 items-center gap-8">
       
       <div class="col-span-12 lg:col-span-7">
-        <div class="flex flex-col items-start">
+        <div class="flex flex-col items-start animate-fade-up animate-duration-500">
           
           <Badge class="bg-blue-600 text-white text-[10px] font-black px-3 py-1 mb-6 tracking-[0.3em] uppercase">
             Transmisión en vivo
@@ -54,7 +54,7 @@
         </div>
       </div>
 
-      <div class="col-span-12 lg:col-span-5 flex justify-end">
+      <div class="col-span-12 lg:col-span-5 flex justify-end animate-fade-up animate-duration-500">
         <div class="bg-white/[0.05] border border-white/10 p-1 w-full max-w-[320px]">
           <div class="border border-white/5 p-8 flex flex-col gap-10">
             

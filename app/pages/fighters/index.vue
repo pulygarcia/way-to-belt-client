@@ -17,7 +17,7 @@
     <Container>
       <Loader v-if="loading" />
 
-      <div v-else-if="fightersByWeight" class="grid grid-cols-3 gap-8 items-start">
+      <div v-else-if="fightersByWeight" class="grid grid-cols-3 gap-8 items-start animate-fade-up animate-duration-500">
         <!--(value, key) in object -->
         <div v-for="(fighters, weightClass) in fightersByWeight" class="bg-black/30 backdrop-blur-md border border-white/10 rounded-sm shadow-2xl overflow-hidden">
           <div class="bg-white/10 p-3 border-b border-white/10">

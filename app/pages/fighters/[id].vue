@@ -16,7 +16,7 @@
 <template>
   <section class="min-h-screen bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-800 via-gray-800 to-black py-12 px-4 font-sans selection:bg-blue-800 selection:text-white">
     
-    <Container>
+    <Container class="animate-fade-up animation-duration-500">
       <NuxtLink to="/fighters" class="inline-flex items-center gap-2 text-white text-xs font-black uppercase mb-12 hover:text-blue-400 transition">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7" />

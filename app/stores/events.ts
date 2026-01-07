@@ -24,6 +24,7 @@ export const useEventsStore = defineStore('events', () => {
 
     } catch (err:any) {
       error.value = err
+      throw err
 
     } finally {
       loading.value = false

@@ -38,6 +38,8 @@ export const useFightersStore = defineStore('fighters', () => {
       if (!res.ok) throw new Error('Error al cargar el combate')
 
       fighter.value = await res.json()   
+      
+      return fighter.value
 
     } catch (err:any) {
       error.value = err
