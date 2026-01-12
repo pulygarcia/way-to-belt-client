@@ -18,7 +18,7 @@
 <template>
     <Card>
         <div
-            class="flex items-center p-4 bg-gray-800 border-l-8 border-red-600 rounded-lg shadow-2xl cursor-pointer hover:bg-gray-900 transition"
+            class="group flex items-center p-4 bg-gray-800 border-l-8 border-red-600 rounded-lg shadow-2xl cursor-pointer hover:bg-gray-900 transition"
             @click="router.push({path: `/events/${event.id}`})"
         >
             <div class="flex flex-col justify-center w-1/4 min-w-max pr-4 border-r border-gray-600 text-center">
@@ -33,26 +33,21 @@
                 <CardHeader class="p-0">
                     <CardTitle>
                         <div class="flex items-center gap-3 mb-2">
-                            <h3 class="text-lg font-bold text-white truncate">{{ event.name }}</h3>
+                            <h3 class="group-hover:text-blue-500 text-lg font-bold text-white truncate">{{ event.name }}</h3>
                         </div>
                     </CardTitle>
                 </CardHeader>
                 <CardContent class="p-0">
-                    <p class="text-2xl font-black text-white flex items-center gap-2">
-                        <span v-if="event.fights?.length" class="text-white">
+                    <p class="text-xl font-bold text-white flex items-center tracking-tight uppercase italic">
+                        <span v-if="event.fights?.length">
                             {{ event.fights[0].fighterA.lastName }}
-                        </span>
-                        <span v-else class="text-red-400 italic">
-                            Pendiente
-                        </span>
-                        <span class="text-red-600 font-bold mx-2">
-                            VS
-                        </span>
-                        <span v-if="event.fights?.length" class="text-white">
+                            <span class="text-red-600 not-italic mx-2 font-black text-lg">vs</span>
                             {{ event.fights[0].fighterB.lastName }}
+
+                            <span class="capitalize text-base text-gray-300 ms-2">({{ event.fights[0].fighterA.weightClass }})</span>
                         </span>
-                        <span v-else class="text-white italic">
-                            Definir
+                        <span v-else class="text-zinc-500 text-sm font-medium not-italic tracking-widest">
+                            Evento principal pendiente
                         </span>
                     </p>
                 </CardContent>

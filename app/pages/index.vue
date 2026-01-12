@@ -12,6 +12,19 @@
     )
 
     const { events, loading } = storeToRefs(eventsStore);
+
+    const nextUpcomingEvent = computed(() => {
+        const allEvents = events.value || [];
+
+        const upcomingEvents = allEvents.filter(event => {
+            const eventDate = new Date(event.date);
+            const now = new Date();
+            return eventDate >= now;
+        });
+
+        upcomingEvents.sort((a, b) => new Date(a.date) - new Date(b.date));
+        return upcomingEvents[0];
+    });
 </script>
 
 <template>
@@ -20,12 +33,12 @@
     </div>
 
     <template v-else>
-        <MainEventHero v-if="events.length" :event="eventsStore.events[0]" :key="eventsStore.events[0].id"/>
+        <MainEventHero v-if="events.length" :event="nextUpcomingEvent" :key="nextUpcomingEvent.id"/>
         <section class="mt-8">
             <Container>
                 <EventsFilter />
                 <p class="mt-10 text-sm text-center uppercase font-bold">{{ eventsStore.eventsLength }} Eventos</p>
-                <div class="grid grid-cols-1 gap-4 mt-10">
+                <div class="grid grid-cols-1 gap-4 mt-10 animate-fade-up animation-duration-500">
                     <EventCard
                         v-for="event in eventsStore.filteredEvents"
                         :key="event.id"

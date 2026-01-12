@@ -21,9 +21,9 @@
 </script>
 
 <template>
-  <section class="min-h-screen bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-500 via-gray-700 to-black text-white p-4 md:p-8">
+  <section class="min-h-screen bg-[#050505] bg-[radial-gradient(ellipse_at_top,_rgba(29,78,216,0.15)_0%,_rgba(5,5,5,1)_70%)] text-zinc-100 p-4 md:p-8">
     <Loader v-if="loading" />
-    <div v-if="!loading && fight.id">
+    <div v-if="!loading && fight.id" class="animate-fade-up animation-duration-500">
       <header class="max-w-6xl container mx-auto text-center mb-10">
         <div class="inline-block bg-red-600 px-4 py-1 mb-4">
           <span class="text-xs font-black uppercase tracking-[0.2em]">{{ fight.fighterA.weightClass }}</span>
@@ -41,15 +41,15 @@
         </h1>
       </header>
       <main class="max-w-5xl mx-auto">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center bg-gray-900 rounded-3xl p-6 md:p-10 border border-gray-800 shadow-2xl relative">
+        <div class="group grid grid-cols-1 md:grid-cols-3 gap-8 items-center bg-gray-900 rounded-3xl p-6 md:p-10 border border-gray-800 shadow-2xl relative">
     
           <div class="flex flex-col items-center">
             <div class="relative">
               <div :class="[
-                'w-32 h-32 md:w-40 md:h-40 rounded-2xl flex items-center justify-center text-4xl font-black border-4 transition-all duration-500',
-                hasStats && fight.stats[0]?.isWinner ? 'border-yellow-500 bg-yellow-500/10 text-yellow-500 shadow-[0_0_30px_rgba(234,179,8,0.2)]' : 'border-gray-700 bg-gray-800 text-gray-500'
+                'w-32 h-32 md:w-40 md:h-40 rounded-2xl flex items-center justify-center text-4xl font-black border-4 transition',
+                hasStats && fight.stats[0]?.isWinner ? 'border-yellow-500 bg-yellow-500/10 text-yellow-500 shadow-[0_0_30px_rgba(234,179,8,0.2)]' : 'group-hover:border-blue-500 border-gray-700 bg-gray-800 text-gray-500'
               ]">
-                {{ getInitials(fight.fighterA.firstName, fight.fighterA.lastName) }}
+                <span class="group-hover:text-blue-500 transition">{{ getInitials(fight.fighterA.firstName, fight.fighterA.lastName) }}</span>
               </div>
               <div class="absolute -bottom-3 bg-gray-800 border border-gray-600 px-3 py-1 rounded text-[10px] font-bold uppercase tracking-tighter">
                 {{ fight.fighterA.nationality }}
@@ -69,17 +69,19 @@
               <p class="text-gray-400 font-bold uppercase text-xs tracking-widest">Round {{ fight.rounds }}</p>
             </div>
             <div v-else class="text-center">
-              <div class="text-7xl font-black text-gray-800 italic leading-none">VS</div>
-              <p class="text-red-500 font-black mt-2 tracking-widest uppercase text-sm">Próximamente</p>
+              <div class="group-hover:scale-150 group-hover:text-red-500 transition text-7xl font-black text-gray-800 italic leading-none">VS</div>
+              <p class="text-blue-500 font-bold mt-4 tracking-[0.3em] uppercase text-[10px] opacity-80 group-hover:opacity-100 transition-opacity">
+                  Próximamente
+              </p>
             </div>
           </div>
           <div class="flex flex-col items-center">
             <div class="relative">
               <div :class="[
-                'w-32 h-32 md:w-40 md:h-40 rounded-2xl flex items-center justify-center text-4xl font-black border-4 transition-all duration-500',
-                hasStats && fight.stats[1]?.isWinner ? 'border-yellow-500 bg-yellow-500/10 text-yellow-500 shadow-[0_0_30px_rgba(234,179,8,0.2)]' : 'border-gray-700 bg-gray-800 text-gray-500'
+                'w-32 h-32 md:w-40 md:h-40 rounded-2xl flex items-center justify-center text-4xl font-black border-4 transition',
+                hasStats && fight.stats[1]?.isWinner ? 'border-yellow-500 bg-yellow-500/10 text-yellow-500 shadow-[0_0_30px_rgba(234,179,8,0.2)]' : 'group-hover:border-blue-500 border-gray-700 bg-gray-800 text-gray-500'
               ]">
-                {{ getInitials(fight.fighterB.firstName, fight.fighterB.lastName) }}
+                <span class="group-hover:text-blue-500 transition">{{ getInitials(fight.fighterB.firstName, fight.fighterB.lastName) }}</span>
               </div>
               <div class="absolute -bottom-3 bg-gray-800 border border-gray-600 px-3 py-1 rounded text-[10px] font-bold uppercase tracking-tighter">
                 {{ fight.fighterB.nationality }}
@@ -130,8 +132,8 @@
             </div>
           </div>
         </section>
-        <section class="mt-8 bg-gray-900 border border-gray-800 rounded-3xl p-6">
-          <h4 class="text-center text-xs font-black uppercase text-gray-600 mb-6 tracking-widest">Comparativa Física</h4>
+        <section class="group mt-8 bg-gray-900 border border-gray-800 rounded-3xl p-6">
+          <h4 class="text-center text-xs font-black uppercase text-gray-600 mb-6 tracking-widest group-hover:text-red-500 transition">Comparativa Física</h4>
           <div class="max-w-md mx-auto space-y-4">
             <div class="flex justify-between items-center border-b border-gray-800 pb-2">
               <span class="text-2xl font-black">{{ fight.fighterA.height }}cm</span>
