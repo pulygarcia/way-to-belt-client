@@ -52,9 +52,17 @@
         </header>
 
         <div class="col-span-12 lg:col-span-3">
-            <div class="h-full bg-blue-600 flex flex-col items-center justify-center p-8 rounded-sm shadow-2xl shadow-blue-500/20">
-                <span class="text-white/70 text-xs font-black uppercase tracking-widest mb-2 text-center">World Ranking</span>
-                <span class="text-7xl font-black text-white italic">#{{ fighter.rankingPosition }}</span>
+            <div 
+              class="h-full flex flex-col items-center justify-center p-8 rounded-sm shadow-2xl shadow-blue-500/20"
+              :class="fighter.rankingPosition === 0 ? 'bg-yellow-600' : 'bg-blue-600'"
+            >
+                <span class="text-white/70 text-xs font-black uppercase tracking-widest mb-2 text-center">Ranking mundial</span>
+                <span 
+                  class="font-black text-white italic w-full text-center"
+                  :class="fighter.rankingPosition === 0 ? 'text-4xl' : 'text-7xl'"
+                >
+                  #{{ fighter.rankingPosition === 0 ? 'Campeón' : fighter.rankingPosition }}
+                </span>
             </div>
         </div>
 
