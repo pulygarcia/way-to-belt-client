@@ -37,7 +37,7 @@
           <span>{{ fight.event.location }}</span>
         </div>
         <h1 class="text-4xl md:text-6xl font-black italic uppercase tracking-tighter mb-3">
-          {{ hasStats ? 'Post-Fight Analytics' : 'Upcoming Fight' }} <span class="text-red-600"></span>
+          {{ hasStats ? 'Post-Fight Analisis' : 'Combate Próximo' }} <span class="text-red-600"></span>
         </h1>
       </header>
       <main class="max-w-5xl mx-auto">
@@ -45,20 +45,26 @@
     
           <div class="flex flex-col items-center">
             <div class="relative">
-              <div :class="[
-                'w-32 h-32 md:w-40 md:h-40 rounded-2xl flex items-center justify-center text-4xl font-black border-4 transition',
-                hasStats && fight.stats[0]?.isWinner ? 'border-yellow-500 bg-yellow-500/10 text-yellow-500 shadow-[0_0_30px_rgba(234,179,8,0.2)]' : 'group-hover:border-blue-500 border-gray-700 bg-gray-800 text-gray-500'
-              ]">
+              <div 
+                :class="[
+                  'w-32 h-32 md:w-40 md:h-40 rounded-2xl flex items-center justify-center text-4xl font-black border-4 transition',
+                  hasStats && fight.stats.find(s => s.fighter.id === fight.fighterA.id)?.isWinner
+                    ? 'border-yellow-500 bg-yellow-500/10 text-yellow-500 shadow-[0_0_30px_rgba(234,179,8,0.2)]'
+                    : 'group-hover:border-blue-500 border-gray-700 bg-gray-800 text-gray-500'
+                ]"
+              >
                 <span class="group-hover:text-blue-500 transition">{{ getInitials(fight.fighterA.firstName, fight.fighterA.lastName) }}</span>
               </div>
               <div class="absolute -bottom-3 bg-gray-800 border border-gray-600 px-3 py-1 rounded text-[10px] font-bold uppercase tracking-tighter">
                 {{ fight.fighterA.nationality }}
               </div>
             </div>
-            <h2 class="mt-6 text-2xl font-black uppercase leading-none text-center">
-              {{ fight.fighterA.firstName }}
-              <span class="block text-3xl">{{ fight.fighterA.lastName }}</span>
-            </h2>
+            <NuxtLink :to="`/fighters/${fight.fighterA.id}`" class="hover:underline">
+              <h2 class="mt-6 text-2xl font-black uppercase leading-none text-center">
+                {{ fight.fighterA.firstName }}
+                <span class="block text-3xl">{{ fight.fighterA.lastName }}</span>
+              </h2>
+            </NuxtLink>
             <p class="text-gray-500 font-bold mt-2">{{ fight.fighterA.wins }}-{{ fight.fighterA.losses }}-{{ fight.fighterA.draws }}</p>
           </div>
           <div class="flex flex-col items-center justify-center py-6 md:py-0">
@@ -77,20 +83,24 @@
           </div>
           <div class="flex flex-col items-center">
             <div class="relative">
-              <div :class="[
-                'w-32 h-32 md:w-40 md:h-40 rounded-2xl flex items-center justify-center text-4xl font-black border-4 transition',
-                hasStats && fight.stats[1]?.isWinner ? 'border-yellow-500 bg-yellow-500/10 text-yellow-500 shadow-[0_0_30px_rgba(234,179,8,0.2)]' : 'group-hover:border-blue-500 border-gray-700 bg-gray-800 text-gray-500'
-              ]">
+              <div 
+                :class="[
+                  'w-32 h-32 md:w-40 md:h-40 rounded-2xl flex items-center justify-center text-4xl font-black border-4 transition',
+                  hasStats && fight.stats.find(s => s.fighter.id === fight.fighterB.id)?.isWinner ? 'border-yellow-500 bg-yellow-500/10 text-yellow-500 shadow-[0_0_30px_rgba(234,179,8,0.2)]' : 'group-hover:border-blue-500 border-gray-700 bg-gray-800 text-gray-500'
+                ]"
+              >
                 <span class="group-hover:text-blue-500 transition">{{ getInitials(fight.fighterB.firstName, fight.fighterB.lastName) }}</span>
               </div>
               <div class="absolute -bottom-3 bg-gray-800 border border-gray-600 px-3 py-1 rounded text-[10px] font-bold uppercase tracking-tighter">
                 {{ fight.fighterB.nationality }}
               </div>
             </div>
-            <h2 class="mt-6 text-2xl font-black uppercase leading-none text-center">
-              {{ fight.fighterB.firstName }}
-              <span class="block text-3xl">{{ fight.fighterB.lastName }}</span>
-            </h2>
+            <NuxtLink :to="`/fighters/${fight.fighterB.id}`" class="hover:underline">
+              <h2 class="mt-6 text-2xl font-black uppercase leading-none text-center">
+                {{ fight.fighterB.firstName }}
+                <span class="block text-3xl">{{ fight.fighterB.lastName }}</span>
+              </h2>
+            </NuxtLink>
             <p class="text-gray-500 font-bold mt-2">{{ fight.fighterB.wins }}-{{ fight.fighterB.losses }}-{{ fight.fighterB.draws }}</p>
           </div>
         </div>

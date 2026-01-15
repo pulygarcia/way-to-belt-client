@@ -4,17 +4,25 @@
     import MainEventHero from '~/components/MainEventHero.vue';
     import EventCard from '~/components/EventCard.vue';
     import Container from '~/components/Container.vue';
+    import NewsCard from '~/components/NewsCard.vue';
+    import { useNewsStore } from '~/stores/news';
 
     const eventsStore = useEventsStore();
+    const newsStore = useNewsStore();
 
-    useAsyncData('events', () =>
+    await useAsyncData('events', () =>
         eventsStore.fetchEvents()
     )
 
-    const { events, loading } = storeToRefs(eventsStore);
+    const {events, loading} = storeToRefs(eventsStore);
+    
+    const {pending:pendingNews} = await useAsyncData('news', () => 
+        newsStore.fetchNews(), {lazy:true}
+    );
+    const {news, loading: newsLoading} = storeToRefs(newsStore);
 
     const nextUpcomingEvent = computed(() => {
-        const allEvents = events.value || [];
+        const allEvents = eventsStore.events || [];
 
         const upcomingEvents = allEvents.filter(event => {
             const eventDate = new Date(event.date);
@@ -25,6 +33,7 @@
         upcomingEvents.sort((a, b) => new Date(a.date) - new Date(b.date));
         return upcomingEvents[0];
     });
+
 </script>
 
 <template>
@@ -33,12 +42,14 @@
     </div>
 
     <template v-else>
-        <MainEventHero v-if="events.length" :event="nextUpcomingEvent" :key="nextUpcomingEvent.id"/>
-        <section class="mt-8">
+        <MainEventHero v-if="events && events.length" :event="nextUpcomingEvent" :key="nextUpcomingEvent.id"/>
+        <section class="my-8">
             <Container>
                 <EventsFilter />
                 <p class="mt-10 text-sm text-center uppercase font-bold">{{ eventsStore.eventsLength }} Eventos</p>
-                <div class="grid grid-cols-1 gap-4 mt-10 animate-fade-up animation-duration-500">
+                <div 
+                    class="grid grid-cols-1 gap-4 mt-10 animate-fade-up"
+                >
                     <EventCard
                         v-for="event in eventsStore.filteredEvents"
                         :key="event.id"
@@ -47,6 +58,16 @@
                 </div>
             </Container>
         </section>
+
+        <section class="my-8">
+            <Container>
+                <div 
+                    ref="articles" 
+                    class="grid grid-cols-1 gap-8 mt-20 animate-fade-up"
+                >
+                    <NewsCard v-for="(article) in news?.articles" :key="article.id" :article="article" />
+                </div>
+            </Container>
+        </section>
     </template>
 </template>
-

@@ -3,13 +3,16 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       apiBase: process.env.NUXT_PUBLIC_API_BASE,
+      newsApiKey: process.env.NUXT_PUBLIC_NEWS_API_KEY,
+      newsApiBase: process.env.NUXT_PUBLIC_NEWS_API_BASE,
     },
   },
   modules: [
     '@nuxtjs/tailwindcss',
     'shadcn-nuxt',
     '@pinia/nuxt',
-    '@vee-validate/nuxt'
+    '@vee-validate/nuxt',
+    '@vueuse/nuxt'
   ],
  shadcn: {
     prefix: 'Ui',
