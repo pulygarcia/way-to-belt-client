@@ -11,8 +11,8 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     'shadcn-nuxt',
     '@pinia/nuxt',
-    '@vee-validate/nuxt',
-    '@vueuse/nuxt'
+    '@vueuse/nuxt',
+    '@formkit/nuxt'
   ],
  shadcn: {
     prefix: 'Ui',
@@ -34,17 +34,6 @@ export default defineNuxtConfig({
        * @default `['stores']`
        */
         storesDirs: []
-  },
-  veeValidate: {
-    // disable or enable auto imports
-    autoImports: true,
-    // Use different names for components
-    componentNames: {
-      Form: 'VeeForm',
-      Field: 'VeeField',
-      FieldArray: 'VeeFieldArray',
-      ErrorMessage: 'VeeErrorMessage',
-    },
   },
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },

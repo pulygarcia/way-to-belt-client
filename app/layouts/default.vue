@@ -11,7 +11,7 @@
     </main>
 
     <footer class="bg-white border-t mt-auto py-4 px-6 text-center text-gray-500">
-      &copy; 2025 Way to Belt Fighting.
+      &copy; {{ new Date().getFullYear() }} Way to Belt Fighting.
     </footer>
   </div>
 </template>

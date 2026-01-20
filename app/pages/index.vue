@@ -16,9 +16,10 @@
 
     const {events, loading} = storeToRefs(eventsStore);
     
-    const {pending:pendingNews} = await useAsyncData('news', () => 
-        newsStore.fetchNews(), {lazy:true}
+    await useAsyncData('news', () => 
+        newsStore.fetchNews()
     );
+
     const {news, loading: newsLoading} = storeToRefs(newsStore);
 
     const nextUpcomingEvent = computed(() => {
@@ -59,7 +60,11 @@
             </Container>
         </section>
 
-        <section class="my-8">
+        <div v-if="newsLoading" class="flex items-center justify-center">
+            <Loader />
+        </div>
+
+        <section v-else class="my-8">
             <Container>
                 <div 
                     ref="articles" 
