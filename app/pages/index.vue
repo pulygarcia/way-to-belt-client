@@ -64,7 +64,7 @@
             <Loader />
         </div>
 
-        <section v-else class="my-8">
+        <section v-else class="my-8" id="news">
             <Container>
                 <div 
                     ref="articles" 
