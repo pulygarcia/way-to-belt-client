@@ -6,6 +6,7 @@ export const useFightersStore = defineStore('fighters', () => {
   const config = useRuntimeConfig()
 
   const fighters = ref<Fighter[]>([])
+  const latestFighters = ref<Fighter[]>([])
   const fighter = ref<Fighter>({} as Fighter)
   const loading = ref(false)
   const error = ref(null)
@@ -40,6 +41,23 @@ export const useFightersStore = defineStore('fighters', () => {
       fighter.value = await res.json()   
       
       return fighter.value
+
+    } catch (err:any) {
+      error.value = err
+
+    } finally {
+      loading.value = false
+    }
+  }
+
+  const fetchLatestFighters = async () => {
+    loading.value = true
+    error.value = null
+    try {
+      const res = await fetch(`${config.public.apiBase}/fighters/latest`)
+      if (!res.ok) throw new Error('Error al cargar los últimos peleadores')
+
+      latestFighters.value = await res.json()   
 
     } catch (err:any) {
       error.value = err
@@ -103,11 +121,16 @@ export const useFightersStore = defineStore('fighters', () => {
     );
   });
 
+  const fightersLength = computed(() => fighters.value.length);
+
     return { 
         fetchFighters,
+        fetchLatestFighters,
         fetchFighterById,
         fighterFightsHistory,
-        fighters, 
+        fighters,
+        latestFighters, 
+        fightersLength,
         fightersByWeight,
         fighter,
         loading,

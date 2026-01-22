@@ -7,6 +7,7 @@ export const useAuthsStore = defineStore('auth', () => {
     const config = useRuntimeConfig()
     const router = useRouter();
 
+    const usersLength = ref(0)
     const loading = ref(false)
     const error = ref(null)
 
@@ -72,9 +73,36 @@ export const useAuthsStore = defineStore('auth', () => {
         }
     }
 
+    const getRegisteredUsers = async () => {
+        loading.value = true
+        error.value = null
+
+        try {
+            
+            const response = await fetch(`${config.public.apiBase}/user`)
+
+            if (response.ok) {
+                const data = await response.json();
+                usersLength.value = data.length;
+
+            } else {
+                throw new Error('Error al obtener usuarios registrados')
+            }
+
+        } catch (err:any) {
+            error.value = err
+            throw err
+
+        } finally {
+            loading.value = false
+        }
+    }
+
     return { 
         registerAccount,
         loginAccount,
+        getRegisteredUsers,
+        usersLength,
         loading,
         error 
     }

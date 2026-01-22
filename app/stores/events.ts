@@ -48,13 +48,39 @@ export const useEventsStore = defineStore('events', () => {
     filter.value = type
   }
 
+  const nextUpcomingEvent = computed(() => {
+      const allEvents = events.value || [];
+
+      const upcomingEvents = allEvents.filter(event => {
+          const eventDate = new Date(event.date);
+          const now = new Date();
+          return eventDate >= now;
+      });
+
+      upcomingEvents.sort((a, b) => +a.date - +b.date);
+      return upcomingEvents[0];
+  });
+
+  const upcomingEventsLength = computed(() => {
+    const now = new Date()
+    return events.value.filter(event => new Date(event.date) > now).length
+  })
+
+  const pastEventsLength = computed(() => {
+    const now = new Date()
+    return events.value.filter(event => new Date(event.date) < now).length
+  })
+
     return { 
         events, 
         eventsLength,
+        nextUpcomingEvent,
         fetchEvents, 
         filter, 
         setFilter, 
         filteredEvents,
+        upcomingEventsLength,
+        pastEventsLength,
         loading,
         error 
     }

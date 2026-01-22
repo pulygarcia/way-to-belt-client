@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
     import { useEventsStore } from '~/stores/events'
     import EventsFilter from '~/components/EventsFilter.vue';
     import MainEventHero from '~/components/MainEventHero.vue';
@@ -14,26 +14,13 @@
         eventsStore.fetchEvents()
     )
 
-    const {events, loading} = storeToRefs(eventsStore);
+    const {events, loading, nextUpcomingEvent} = storeToRefs(eventsStore);
     
     await useAsyncData('news', () => 
         newsStore.fetchNews()
     );
 
     const {news, loading: newsLoading} = storeToRefs(newsStore);
-
-    const nextUpcomingEvent = computed(() => {
-        const allEvents = eventsStore.events || [];
-
-        const upcomingEvents = allEvents.filter(event => {
-            const eventDate = new Date(event.date);
-            const now = new Date();
-            return eventDate >= now;
-        });
-
-        upcomingEvents.sort((a, b) => new Date(a.date) - new Date(b.date));
-        return upcomingEvents[0];
-    });
 
 </script>
 
@@ -43,7 +30,7 @@
     </div>
 
     <template v-else>
-        <MainEventHero v-if="events && events.length" :event="nextUpcomingEvent" :key="nextUpcomingEvent.id"/>
+        <MainEventHero v-if="events && nextUpcomingEvent" :event="nextUpcomingEvent" :key="nextUpcomingEvent.id"/>
         <section class="my-8">
             <Container>
                 <EventsFilter />
@@ -70,7 +57,7 @@
                     ref="articles" 
                     class="grid grid-cols-1 gap-8 mt-20 animate-fade-up"
                 >
-                    <NewsCard v-for="(article) in news?.articles" :key="article.id" :article="article" />
+                    <NewsCard v-for="(article) in news?.articles" :key="article.title" :article="article" />
                 </div>
             </Container>
         </section>
