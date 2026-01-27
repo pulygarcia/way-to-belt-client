@@ -7,6 +7,8 @@ export const useAuthsStore = defineStore('auth', () => {
     const config = useRuntimeConfig()
     const router = useRouter();
 
+    const token = useCookie('access_token')
+    const user = ref(null)
     const usersLength = ref(0)
     const loading = ref(false)
     const error = ref(null)
@@ -98,9 +100,39 @@ export const useAuthsStore = defineStore('auth', () => {
         }
     }
 
+    const getCurrentUser = async () => {
+        if (token.value) {
+            try {
+                const response = await fetch(`${config.public.apiBase}/auth/profile`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token.value}`
+                    }
+                })
+
+                if (response.ok) {
+                    const userData = await response.json();
+                    user.value = userData;
+                }
+
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+            }
+        }
+    }
+
+    const closeSession = () => {
+        useCookie('access_token').value = null;
+        router.push('/auth/login');
+    }
+
     return { 
         registerAccount,
         loginAccount,
+        user,
+        getCurrentUser,
+        closeSession,
+        token,
         getRegisteredUsers,
         usersLength,
         loading,

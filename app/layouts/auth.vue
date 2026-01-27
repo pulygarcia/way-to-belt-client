@@ -1,7 +1,10 @@
 <script setup>
+import 'vue-sonner/style.css'
+import { Toaster } from '@/components/ui/sonner'
 
 </script>
 <template>
+    <Toaster richColors position="top-center" />
     <Header />
     <section class="min-h-screen bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-800 via-gray-800 to-black flex items-center justify-center p-4">
 

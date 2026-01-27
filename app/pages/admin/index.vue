@@ -27,8 +27,6 @@
         return true
     });
 
-
-    //data simulation
     const stats = [
     { label: 'Peleadores Activos', value: fightersStore.fightersLength, icon: '' },
     { label: 'Próximos Eventos', value: eventsStore.upcomingEventsLength, icon: ''},

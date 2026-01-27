@@ -1,9 +1,12 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import type { Fighter } from '~/utils/interfaces/fighter'
+import { useAuthsStore } from './auth'
+import { type FighterFormData } from '~/utils/schemas/fighters'
 
 export const useFightersStore = defineStore('fighters', () => {
   const config = useRuntimeConfig()
+  const authStore = useAuthsStore()
 
   const fighters = ref<Fighter[]>([])
   const latestFighters = ref<Fighter[]>([])
@@ -31,7 +34,7 @@ export const useFightersStore = defineStore('fighters', () => {
     }
   }
 
-  const fetchFighterById = async (id: string) => {
+  const fetchFighterById = async (id: number) => {
     loading.value = true
     error.value = null
     try {
@@ -61,6 +64,96 @@ export const useFightersStore = defineStore('fighters', () => {
 
     } catch (err:any) {
       error.value = err
+
+    } finally {
+      loading.value = false
+    }
+  }
+
+  const registerFighter = async (fighterData:any) => {
+    loading.value = true
+    error.value = null
+    try {
+      const res = await fetch(`${config.public.apiBase}/fighters`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: `Bearer ${authStore.token}`
+        },
+        body: JSON.stringify(fighterData),
+      })
+      if (!res.ok) throw new Error('Error al registrar el peleador')
+
+      return 'Peleador registrado con éxito'
+
+    } catch (err:any) {
+      error.value = err
+
+    } finally {
+      loading.value = false
+    }
+  }
+
+  const removeFighter = async (fighterId:number) => {
+    loading.value = true
+    error.value = null
+    try {
+      const res = await fetch(`${config.public.apiBase}/fighters/${fighterId}`, {
+        method: 'DELETE',
+        headers: {
+          authorization: `Bearer ${authStore.token}`
+        }
+      })
+      if (!res.ok) throw new Error('Error al eliminar el peleador')
+
+      fighters.value = fighters.value.filter(f => f.id !== fighterId) //refresh visually
+
+      return 'Peleador eliminado con éxito'
+
+    } catch (err:any) {
+      error.value = err
+
+    } finally {
+      loading.value = false
+    }
+  }
+
+  const updateFighter = async (id: number, fighterData: FighterFormData) => {
+    loading.value = true
+    error.value = null
+    try {
+      const res = await fetch(`${config.public.apiBase}/fighters/${id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: `Bearer ${authStore.token}`
+        },
+        body: JSON.stringify(fighterData),
+      })
+
+      if (!res.ok) {
+        const errorData = await res.json()
+        throw new Error(errorData.message || 'Error al actualizar el peleador')
+      }
+
+      const updatedFighter = await res.json()
+
+      //refresh visually
+      const index = fighters.value.findIndex(f => f.id === id)
+      if (index !== -1) {
+        fighters.value[index] = updatedFighter
+      }
+      
+      if (fighter.value && fighter.value.id === id) {
+        fighter.value = updatedFighter
+      }
+
+      return updatedFighter
+
+    } catch (err: any) {
+      error.value = err.message
+
+      throw err
 
     } finally {
       loading.value = false
@@ -128,6 +221,9 @@ export const useFightersStore = defineStore('fighters', () => {
         fetchLatestFighters,
         fetchFighterById,
         fighterFightsHistory,
+        registerFighter,
+        removeFighter,
+        updateFighter,
         fighters,
         latestFighters, 
         fightersLength,
